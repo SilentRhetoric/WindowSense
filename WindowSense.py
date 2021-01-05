@@ -58,12 +58,12 @@ class WindowSense:
     thermostat_traits = {
         'heat_setpoint': {
             'value': 65,  # Defaulted if no Nest connected, initialized as int
-            'text': 'Heat at: ',
+            'text': 'Heat to: ',
             'color': led_settings['orange']
             },
         'cool_setpoint': {
             'value': 75,  # Defaulted if no Nest connected, initialized as int
-            'text': 'Cool at: ',
+            'text': 'Cool to: ',
             'color': led_settings['blue']
             },
         'temperature': {
@@ -122,7 +122,7 @@ class WindowSense:
         response = requests.get(url_get_devices, headers=headers)
         response_json = response.json()
         device_0_name = response_json['devices'][0]['name']  # Assumes one Nest
-        print(response.json())
+        #print(response.json())
 
         # Get device traits
         url_get_device = 'https://smartdevicemanagement.googleapis.com/v1/' + device_0_name
@@ -144,7 +144,7 @@ class WindowSense:
         with open("thermostat_traits.json", "w") as thermostat_traits:
             json.dump(response_json, thermostat_traits, indent=4)
 
-        print(json.dumps(response_json))
+        #print(json.dumps(response_json))
         print('Humidity:', humidity)
         print('Temperature:', temperature)
         print('Heat setpoint:', heat_setpoint)
@@ -159,6 +159,7 @@ class WindowSense:
         api_key = getenv('API_KEY')
         lat = float(getenv('LATITUDE'))
         lon = float(getenv('LONGITUDE'))
+        print(api_key)
         print(lat, lon)
         owm = OWM(api_key)
         mgr = owm.weather_manager()
@@ -206,32 +207,26 @@ class WindowSense:
                 for i in range(4):
                     if forecast_temp > (midpoint + step_size * (3-i)):
                         sense.set_pixel(key, i, leds[graph[i]])
-                        sleep(0.1)
+                        sleep(0.05)
             if midpoint > forecast_temp:
                 for i in range(3):
                     if forecast_temp < (midpoint - step_size * i):
                         sense.set_pixel(key, i+4, leds[graph[i+4]])
-                        sleep(0.1)
+                        sleep(0.05)
                 if forecast_temp > 32:
                     sense.set_pixel(key, 7, leds[graph[7]])
-                    sleep(0.1)
+                    sleep(0.05)
                 if forecast_temp <= 32:
                     sense.set_pixel(key, 7, leds['white'])
-                    sleep(0.1)
+                    sleep(0.05)
         return
 
     def show_setpoints(self):
         """Displays the Nest thermostat heat/cool setpoints."""
         leds = self.led_settings
         therm = self.thermostat_traits
-        heat_setpoint_message = (
-            therm['heat_setpoint']['text'] + ' ' +
-            therm['heat_setpoint']['value']
-            )
-        cool_setpoint_message = (
-            therm['cool_setpoint']['text'] + ' ' +
-            therm['cool_setpoint']['value']
-            )
+        heat_setpoint_message = f"{therm['heat_setpoint']['text']} + {therm['heat_setpoint']['value']}"
+        cool_setpoint_message = f"{therm['cool_setpoint']['text']} + {therm['cool_setpoint']['value']}"
         sense.show_message(heat_setpoint_message,
                            scroll_speed=leds['scroll_speed'],
                            text_colour=therm['heat_setpoint']['color'],
@@ -247,14 +242,8 @@ class WindowSense:
         """Displays the Nest thermostat ambient temperature & humidity."""
         leds = self.led_settings
         therm = self.thermostat_traits
-        temp_message = (
-            therm['Temperature']['text'] + ' ' +
-            therm['Temperature']['value']
-            )
-        humidity_message = (
-            therm['Humidity']['text'] + ' ' +
-            therm['Humidity']['value']
-            )
+        temp_message = f"{therm['Temperature']['text']} + {therm['Temperature']['value']}"
+        humidity_message = f"{therm['Humidity']['text']} + {therm['Humidity']['value']}"
         sense.show_message(temp_message,
                            scroll_speed=leds['scroll_speed'],
                            text_colour=therm['temperature']['color'],
