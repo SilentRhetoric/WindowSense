@@ -1,5 +1,5 @@
 /google_auth.env
-/owm_inputs.env
+/owm_config.env
 *.txt
 *.env
 *.json

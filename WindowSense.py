@@ -155,20 +155,16 @@ class WindowSense:
         """Assembles an OpenWeatherMap API call using pyowm, gets the
          forecast temperature for the next eight hours."""
         # Builds pyowm call to the OWM API for a location's hourly temps
-        load_dotenv('owm_inputs.env')
-        api_key = getenv("API_KEY")
-        latitude = float(getenv("LATITUDE"))
-        longitude = float(getenv("LONGITUDE"))
+        load_dotenv('owm_config.env')
+        api_key = getenv('API_KEY')
+        lat = float(getenv('LATITUDE'))
+        lon = float(getenv('LONGITUDE'))
+        print(lat, lon)
         owm = OWM(api_key)
         mgr = owm.weather_manager()
-        one_call = mgr.one_call(
-            lat=latitude,
-            lon=longitude,
-            exclude='minutely,daily',
-            units='imperial')
+        one_call = mgr.one_call(lat=lat, lon=lon, exclude='minutely,daily', units='imperial')
         for key in self.forecast_temps:
-            self.forecast_temps[key] = \
-                one_call.forecast_hourly[key].temperature().get('temp')
+            self.forecast_temps[key] = one_call.forecast_hourly[key].temperature().get('temp')
         print(self.forecast_temps)
         return
 
