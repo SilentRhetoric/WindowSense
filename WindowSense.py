@@ -31,7 +31,8 @@ class WindowSense:
     led_settings = {
         'dim_state': True,
         'rotation': 270,
-        'scroll_speed': 0.01,
+        'scroll_speed': 0.01,  # In seconds; lower is faster
+        'graph_speed': 0.05,  # In seconds; lower is faster
         'red': (255, 0, 0),
         'orange': (255, 127, 0),
         'yellow': (255, 255, 0),
@@ -58,22 +59,22 @@ class WindowSense:
     thermostat_traits = {
         'heat_setpoint': {
             'value': 65,  # Defaulted if no Nest connected, initialized as int
-            'text': 'Heat to: ',
+            'text': 'Heat to ',
             'color': led_settings['orange']
             },
         'cool_setpoint': {
             'value': 75,  # Defaulted if no Nest connected, initialized as int
-            'text': 'Cool to: ',
+            'text': 'Cool to ',
             'color': led_settings['blue']
             },
         'temperature': {
             'value': 70.00,  # Initialized as a float
-            'text': 'Temp: ',
+            'text': 'Temp ',
             'color': led_settings['white']
             },
         'humidity': {
             'value': 50,  # Initialized as an int
-            'text': 'Hum: ',
+            'text': 'Hum ',
             'color': led_settings['cyan']
             },
         }
@@ -135,9 +136,9 @@ class WindowSense:
         humidity = response_json['traits']['sdm.devices.traits.Humidity']['ambientHumidityPercent']
         self.thermostat_traits['humidity']['value'] = humidity
         temperature = response_json['traits']['sdm.devices.traits.Temperature']['ambientTemperatureCelsius']
-        self.thermostat_traits['temperature']['value'] = self.c_to_f(temperature)
+        self.thermostat_traits['temperature']['value'] = round(self.c_to_f(temperature))
         heat_setpoint = response_json['traits']['sdm.devices.traits.ThermostatTemperatureSetpoint']['heatCelsius']
-        self.thermostat_traits['heat_setpoint']['value'] = self.c_to_f(heat_setpoint)
+        self.thermostat_traits['heat_setpoint']['value'] = round(self.c_to_f(heat_setpoint))
         #cool_setpoint = response_json['traits']['sdm.devices.traits.ThermostatTemperatureSetpoint']['coolCelsius']
         #self.thermostat_traits['cool_setpoint']['value'] = self.c_to_f(cool_setpoint)
 
@@ -207,18 +208,18 @@ class WindowSense:
                 for i in range(4):
                     if forecast_temp > (midpoint + step_size * (3-i)):
                         sense.set_pixel(key, i, leds[graph[i]])
-                        sleep(0.05)
+                        sleep(self.led_settings['graph_speed'])
             if midpoint > forecast_temp:
                 for i in range(3):
                     if forecast_temp < (midpoint - step_size * i):
                         sense.set_pixel(key, i+4, leds[graph[i+4]])
-                        sleep(0.05)
+                        sleep(self.led_settings['graph_speed'])
                 if forecast_temp > 32:
                     sense.set_pixel(key, 7, leds[graph[7]])
-                    sleep(0.05)
+                    sleep(self.led_settings['graph_speed'])
                 if forecast_temp <= 32:
                     sense.set_pixel(key, 7, leds['white'])
-                    sleep(0.05)
+                    sleep(self.led_settings['graph_speed'])
         return
 
     def show_setpoints(self):
