@@ -308,37 +308,41 @@ def stick_actions():
         sleep(0.1)
         stick = sense.stick.wait_for_event(emptybuffer=True)
         if stick:  # If list is not empty
-            stick_input.set()
-            if stick.action == 'pressed':
-                if stick.direction == 'left':
-                    WindowSense().toggle_brightness()
-                elif stick.direction == 'right':
-                    WindowSense().turn_off_prompt()
-                elif stick.direction == 'down':
-                    WindowSense().show_setpoints()
-                elif stick.direction == 'up':
-                    WindowSense().show_ambient()
-                elif stick.direction == 'middle':
-                    WindowSense().refresh()
-            stick_input.clear()
+            input.set()
 
 
 def main_process():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
+    stick = sense.stick.get_events()
     while True:
-        if stick_input.is_set():
-            stick_actions()
-        else:
+        if not input.set():
             WindowSense().refresh()
-            stick_input.wait(refresh_interval)
+            input.wait(refresh_interval)
+        else:
+            if stick.action == 'pressed':
+                if stick.direction == 'left':
+                    WindowSense().toggle_brightness()
+                    input.clear()
+                elif stick.direction == 'right':
+                    WindowSense().turn_off_prompt()
+                    input.clear()
+                elif stick.direction == 'down':
+                    WindowSense().show_setpoints()
+                    input.clear()
+                elif stick.direction == 'up':
+                    WindowSense().show_ambient()
+                    input.clear()
+                elif stick.direction == 'middle':
+                    WindowSense().refresh()
+                    input.clear()
 
 
 if __name__ == '__main__':
     sense = SenseHat()
     refresh_interval = 120  # Measured in seconds
     # Threading event to be used as flag to communicate between threads
-    stick_input = threading.Event()
+    input = threading.Event()
     # Maps the functions to the main and event threads
     main_thread = threading.Thread(name='main process', target=main_process)
     main_thread.setDaemon(True)
