@@ -59,22 +59,22 @@ class WindowSense:
     thermostat_traits = {
         'heat_setpoint': {
             'value': 65,  # Defaulted if no Nest connected, initialized as int
-            'text': 'Heat to ',
+            'text': 'Heat to',
             'color': led_settings['orange']
             },
         'cool_setpoint': {
             'value': 75,  # Defaulted if no Nest connected, initialized as int
-            'text': 'Cool to ',
+            'text': 'Cool to',
             'color': led_settings['blue']
             },
         'temperature': {
             'value': 70.00,  # Initialized as a float
-            'text': 'Temp ',
+            'text': 'Temp',
             'color': led_settings['white']
             },
         'humidity': {
             'value': 50,  # Initialized as an int
-            'text': 'Hum ',
+            'text': 'Hum',
             'color': led_settings['cyan']
             },
         }
@@ -161,7 +161,7 @@ class WindowSense:
         lat = float(getenv('LATITUDE'))
         lon = float(getenv('LONGITUDE'))
         print(api_key)
-        print(lat, lon)
+        print(f"{lat}, {lon}")
         owm = OWM(api_key)
         mgr = owm.weather_manager()
         one_call = mgr.one_call(lat=lat, lon=lon, exclude='minutely,daily', units='imperial')
@@ -226,8 +226,8 @@ class WindowSense:
         """Displays the Nest thermostat heat/cool setpoints."""
         leds = self.led_settings
         therm = self.thermostat_traits
-        heat_setpoint_message = f"{therm['heat_setpoint']['text']} + {therm['heat_setpoint']['value']}"
-        cool_setpoint_message = f"{therm['cool_setpoint']['text']} + {therm['cool_setpoint']['value']}"
+        heat_setpoint_message = f"{therm['heat_setpoint']['text']} {therm['heat_setpoint']['value']}"
+        cool_setpoint_message = f"{therm['cool_setpoint']['text']} {therm['cool_setpoint']['value']}"
         sense.show_message(heat_setpoint_message,
                            scroll_speed=leds['scroll_speed'],
                            text_colour=therm['heat_setpoint']['color'],
@@ -243,8 +243,8 @@ class WindowSense:
         """Displays the Nest thermostat ambient temperature & humidity."""
         leds = self.led_settings
         therm = self.thermostat_traits
-        temp_message = f"{therm['temperature']['text']} + {therm['temperature']['value']}"
-        humidity_message = f"{therm['humidity']['text']} + {therm['humidity']['value']}"
+        temp_message = f"{therm['temperature']['text']} {therm['temperature']['value']}"
+        humidity_message = f"{therm['humidity']['text']} {therm['humidity']['value']}"
         sense.show_message(temp_message,
                            scroll_speed=leds['scroll_speed'],
                            text_colour=therm['temperature']['color'],
