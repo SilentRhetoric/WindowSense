@@ -31,7 +31,7 @@ class WindowSense:
     led_settings = {
         'dim_state': True,
         'rotation': 270,
-        'scroll_speed': 0.02,
+        'scroll_speed': 0.01,
         'red': (255, 0, 0),
         'orange': (255, 127, 0),
         'yellow': (255, 255, 0),
@@ -175,9 +175,9 @@ class WindowSense:
         log_timestamp = {'Timestamp': now}
         row_dict = {**log_timestamp, **self.forecast_temps}
         file_exists = path.exists('WindowSense Log.csv')
-        with open('WindowSense Log.csv', 'a+', newline='') as ws_log:
+        with open('Forecast Log.csv', 'a+', newline='') as forecast_log:
             field_names = ['Timestamp'] + (sorted(self.forecast_temps))
-            dict_writer = DictWriter(ws_log, fieldnames=field_names)
+            dict_writer = DictWriter(forecast_log, fieldnames=field_names)
             if not file_exists:
                 dict_writer.writeheader()
             dict_writer.writerow(row_dict)
@@ -242,8 +242,8 @@ class WindowSense:
         """Displays the Nest thermostat ambient temperature & humidity."""
         leds = self.led_settings
         therm = self.thermostat_traits
-        temp_message = f"{therm['Temperature']['text']} + {therm['Temperature']['value']}"
-        humidity_message = f"{therm['Humidity']['text']} + {therm['Humidity']['value']}"
+        temp_message = f"{therm['temperature']['text']} + {therm['temperature']['value']}"
+        humidity_message = f"{therm['humidity']['text']} + {therm['humidity']['value']}"
         sense.show_message(temp_message,
                            scroll_speed=leds['scroll_speed'],
                            text_colour=therm['temperature']['color'],
