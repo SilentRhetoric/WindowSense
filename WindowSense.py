@@ -345,9 +345,7 @@ if __name__ == '__main__':
     input_detected = threading.Event()
     # Maps the functions to the main and event threads
     main_thread = threading.Thread(name='main process', target=main_process)
-    main_thread.setDaemon(True)
     event_thread = threading.Thread(name='stick_actions', target=stick_actions)
-    event_thread.setDaemon(True)
     # The program begins running here
     main_thread.start()
     event_thread.start()
