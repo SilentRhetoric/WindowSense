@@ -1,19 +1,19 @@
-import json
-import requests
+import json  # Writing JSON files for thermostat traits output
+import requests  # For HTTP-based API calls
 import threading  # Enables multiple threads to be running at once
-from time import sleep  # For sleep function
-from datetime import datetime
+from time import sleep  # For LED animations
+from datetime import datetime  # To add timestamps to the log
 from csv import DictWriter  # For logging to .csv
 from subprocess import run  # Enables the operating system shutdown command
-from os import path, getenv
-from dotenv import load_dotenv
+from os import path, getenv  # Get API credentials from environment variables
+from dotenv import load_dotenv  # Load environment variables from files
 from pyowm.owm import OWM  # Convenience wrapper for the OWM API
 from sense_hat import SenseHat  # Enables all the SenseHAT functions
 
 
 class WindowSense:
     """Powers the WindowSense Raspberry Pi SenseHAT project through
-    functions that get Nest thermostat traits, pull OpenWeatherMap
+    functions that get Nest thermostat traits, pull OpenWeatherMap (OWM)
     temperature forecasts, and draw a dynamic graph on the LED matrix.
     Also provides a way to safely shut down the Pi."""
     # Stores the next 8 hours of OWM forecast temps
@@ -31,7 +31,7 @@ class WindowSense:
     led_settings = {
         'dim_state': True,
         'rotation': 270,
-        'scroll_speed': 0.01,  # In seconds; lower is faster
+        'scroll_speed': 0.015,  # In seconds; lower is faster
         'graph_speed': 0.05,  # In seconds; lower is faster
         'red': (255, 0, 0),
         'orange': (255, 127, 0),
@@ -44,7 +44,7 @@ class WindowSense:
         'white': (255, 255, 255),
         'off': (0, 0, 0)  # Turns pixel(s) off
         }
-    # Defines the colors to be used for each row of the graph
+    # Defines the colors to be used for each row of the forecast graph
     graph_colors = {
         0: 'red',
         1: 'orange',
@@ -84,7 +84,8 @@ class WindowSense:
             'color': led_settings['red']
             },
         'wait message': {
-            'text': 'Wait 15s', 'color': led_settings['red']
+            'text': 'Wait 15s',
+            'color': led_settings['red']
             }
         }
 
@@ -108,11 +109,11 @@ class WindowSense:
             ('client_secret', client_secret),
             ('refresh_token', refresh_token),
             ('grant_type', 'refresh_token'),
-        )
+            )
         response = requests.post('https://www.googleapis.com/oauth2/v4/token', params=params)
         response_json = response.json()
         access_token = response_json['token_type'] + ' ' + response_json['access_token']
-        print('Access token: ' + access_token)
+        #print('Access token: ' + access_token)
 
         # Get devices
         url_get_devices = 'https://smartdevicemanagement.googleapis.com/v1/enterprises/' + project_id + '/devices'
@@ -160,7 +161,7 @@ class WindowSense:
         api_key = getenv('API_KEY')
         lat = float(getenv('LATITUDE'))
         lon = float(getenv('LONGITUDE'))
-        print(api_key)
+        #print(api_key)
         print(f"{lat}, {lon}")
         owm = OWM(api_key)
         mgr = owm.weather_manager()
@@ -304,33 +305,33 @@ def stick_actions():
     """While the main thread runs, this event thread checks the SenseHat
     joystick and calls a function based on the input direction."""
     while True:
-        sleep(0.25)
-        stick = sense.stick.get_events()  # Read joystick input
+        sleep(0.1)
+        stick = sense.stick.wait_for_event(emptybuffer=True)
         if stick:  # If list is not empty
             stick_input.set()
-            if stick[0].action == 'released':
-                if stick[0].direction == 'left':
+            if stick.action == 'pressed':
+                if stick.direction == 'left':
                     WindowSense().toggle_brightness()
-                elif stick[0].direction == 'right':
+                elif stick.direction == 'right':
                     WindowSense().turn_off_prompt()
-                elif stick[0].direction == 'down':
+                elif stick.direction == 'down':
                     WindowSense().show_setpoints()
-                elif stick[0].direction == 'up':
+                elif stick.direction == 'up':
                     WindowSense().show_ambient()
-                elif stick[0].direction == 'middle':
+                elif stick.direction == 'middle':
                     WindowSense().refresh()
+            stick_input.clear()
 
 
 def main_process():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
     while True:
-        if not stick_input.is_set():
+        if stick_input.is_set():
+            stick_actions()
+        else:
             WindowSense().refresh()
             stick_input.wait(refresh_interval)
-        else:
-            stick_actions()
-            stick_input.clear()
 
 
 if __name__ == '__main__':
@@ -340,7 +341,9 @@ if __name__ == '__main__':
     stick_input = threading.Event()
     # Maps the functions to the main and event threads
     main_thread = threading.Thread(name='main process', target=main_process)
+    main_thread.setDaemon(True)
     event_thread = threading.Thread(name='stick_actions', target=stick_actions)
-    # The program begins running here!
+    event_thread.setDaemon(True)
+    # The program begins running here
     main_thread.start()
     event_thread.start()
