@@ -306,9 +306,9 @@ def stick_actions():
     joystick and calls a function based on the input direction."""
     while True:
         sleep(0.1)
-        stick = sense.stick.wait_for_event(emptybuffer=True)
+        stick = sense.stick.get_events()
         if stick:  # If list is not empty
-            input.set()
+            input_detected.set()
 
 
 def main_process():
@@ -316,33 +316,33 @@ def main_process():
     graph, but reacts when joystick input is received."""
     stick = sense.stick.get_events()
     while True:
-        if not input.set():
+        if not input_detected.set():
             WindowSense().refresh()
-            input.wait(refresh_interval)
+            input_detected.wait(refresh_interval)
         else:
             if stick.action == 'pressed':
                 if stick.direction == 'left':
                     WindowSense().toggle_brightness()
-                    input.clear()
+                    input_detected.clear()
                 elif stick.direction == 'right':
                     WindowSense().turn_off_prompt()
-                    input.clear()
+                    input_detected.clear()
                 elif stick.direction == 'down':
                     WindowSense().show_setpoints()
-                    input.clear()
+                    input_detected.clear()
                 elif stick.direction == 'up':
                     WindowSense().show_ambient()
-                    input.clear()
+                    input_detected.clear()
                 elif stick.direction == 'middle':
                     WindowSense().refresh()
-                    input.clear()
+                    input_detected.clear()
 
 
 if __name__ == '__main__':
     sense = SenseHat()
     refresh_interval = 120  # Measured in seconds
     # Threading event to be used as flag to communicate between threads
-    input = threading.Event()
+    input_detected = threading.Event()
     # Maps the functions to the main and event threads
     main_thread = threading.Thread(name='main process', target=main_process)
     main_thread.setDaemon(True)
