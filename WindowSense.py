@@ -8,16 +8,16 @@ from subprocess import run  # Enables the operating system shutdown command
 from os import path, getenv
 from dotenv import load_dotenv
 from pyowm.owm import OWM  # Convenience wrapper for the OWM API
-# from pyowm.utils.config import get_config_from  # For pyowm config via json
 from sense_hat import SenseHat  # Enables all the SenseHAT functions
 
 
 class WindowSense:
     """Powers the WindowSense Raspberry Pi SenseHAT project through
-    functions that get the Nest thermostat traits, pull OpenWeatherMap
-    temperature forecasts, and graph them on the RGB LED matrix.
+    functions that get Nest thermostat traits, pull OpenWeatherMap
+    temperature forecasts, and draw a dynamic graph on the LED matrix.
     Also provides a way to safely shut down the Pi."""
-    forecast_temps = {  # Stores the next 8 hours of OWM forecast temps
+    # Stores the next 8 hours of OWM forecast temps
+    forecast_temps = {
         0: 0.0,
         1: 0.0,
         2: 0.0,
@@ -87,6 +87,11 @@ class WindowSense:
             }
         }
 
+    @staticmethod
+    def c_to_f(temp_c):
+        temp_f = (temp_c * 9/5) + 32
+        return temp_f
+
     def get_thermostat(self):
         """Assembles a Google SDM API call using authentication details
         obtained via the Google Device Access & Cloud Platform consoles.
@@ -96,7 +101,6 @@ class WindowSense:
         client_secret = getenv('CLIENT_SECRET')
         refresh_token = getenv('REFRESH_TOKEN')
         project_id = getenv('PROJECT_ID')
-
         # Refresh token
         params = (
             ('client_id', client_id),
@@ -131,20 +135,20 @@ class WindowSense:
         humidity = response_json['traits']['sdm.devices.traits.Humidity']['ambientHumidityPercent']
         self.thermostat_traits['humidity']['value'] = humidity
         temperature = response_json['traits']['sdm.devices.traits.Temperature']['ambientTemperatureCelsius']
-        self.thermostat_traits['temperature']['value'] = temperature
+        self.thermostat_traits['temperature']['value'] = self.c_to_f(temperature)
         heat_setpoint = response_json['traits']['sdm.devices.traits.ThermostatTemperatureSetpoint']['heatCelsius']
-        self.thermostat_traits['heat_setpoint']['value'] = heat_setpoint
-        cool_setpoint = response_json['traits']['sdm.devices.traits.ThermostatTemperatureSetpoint']['coolCelsius']
-        self.thermostat_traits['cool_setpoint']['value'] = cool_setpoint
+        self.thermostat_traits['heat_setpoint']['value'] = self.c_to_f(heat_setpoint)
+        #cool_setpoint = response_json['traits']['sdm.devices.traits.ThermostatTemperatureSetpoint']['coolCelsius']
+        #self.thermostat_traits['cool_setpoint']['value'] = self.c_to_f(cool_setpoint)
 
-        with open("thermostat_traits.json", "w") as nest_traits:
-            json.dump(response_json, nest_traits, indent=4)
+        with open("thermostat_traits.json", "w") as thermostat_traits:
+            json.dump(response_json, thermostat_traits, indent=4)
 
         print(json.dumps(response_json))
         print('Humidity:', humidity)
         print('Temperature:', temperature)
         print('Heat setpoint:', heat_setpoint)
-        print('Cool setpoint:', cool_setpoint)
+        #print('Cool setpoint:', cool_setpoint)
         return
 
     def get_forecast(self):
@@ -152,7 +156,7 @@ class WindowSense:
          forecast temperature for the next eight hours."""
         # Builds pyowm call to the OWM API for a location's hourly temps
         load_dotenv('owm_inputs.env')
-        api_key = str(getenv("API_KEY"))
+        api_key = getenv("API_KEY")
         latitude = float(getenv("LATITUDE"))
         longitude = float(getenv("LONGITUDE"))
         owm = OWM(api_key)
@@ -175,7 +179,7 @@ class WindowSense:
         row_dict = {**log_timestamp, **self.forecast_temps}
         file_exists = path.exists('WindowSense Log.csv')
         with open('WindowSense Log.csv', 'a+', newline='') as ws_log:
-            field_names = ['Timestamp'] + sorted(self.forecast_temps)
+            field_names = ['Timestamp'] + (sorted(self.forecast_temps))
             dict_writer = DictWriter(ws_log, fieldnames=field_names)
             if not file_exists:
                 dict_writer.writeheader()
@@ -315,7 +319,7 @@ def stick_actions():
     joystick and calls a function based on the input direction."""
     while True:
         sleep(0.25)
-        stick = sense.stick.get_events(emptybuffer=True)  # Read joystick input
+        stick = sense.stick.get_events()  # Read joystick input
         if stick:  # If list is not empty
             stick_input.set()
             if stick[0].action == 'released':
