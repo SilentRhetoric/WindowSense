@@ -56,6 +56,7 @@ This program was written and tested on Python 3.7 to ensure compatibility with
 requests  
 dotenv  
 pyowm  
+schedule
 sense_hat
 
 ### Environment Variables
