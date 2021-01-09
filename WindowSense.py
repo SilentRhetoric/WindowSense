@@ -296,27 +296,15 @@ class WindowSense:
         self.draw_graph()
 
 
-#def stick_actions():
-#    """While the main thread runs, this event thread checks the SenseHat
-#    joystick and calls a function based on the input direction."""
-#    while True:
-#        sense.stick.direction_left = WindowSense().toggle_brightness()
-#        sense.stick.direction_right = WindowSense().turn_off_prompt()
-#        sense.stick.direction_down = WindowSense().show_setpoints()
-#        sense.stick.direction_up = WindowSense().show_ambient()
-#        sense.stick.direction_middle = WindowSense().refresh()
-#        pause()
-        #sleep(0.1)
-        #stick = sense.stick.wait_for_event(emptybuffer=True)
-        #if stick:  # If list is not empty
-        #    input_detected.set()
-
-
-sense.stick.direction_left = WindowSense().toggle_brightness()
-sense.stick.direction_right = WindowSense().turn_off_prompt()
-sense.stick.direction_down = WindowSense().show_setpoints()
-sense.stick.direction_up = WindowSense().show_ambient()
-sense.stick.direction_middle = WindowSense().refresh()
+def stick_actions():
+    """While the main thread runs, this event thread checks the SenseHat
+    joystick and calls a function based on the input direction."""
+    while True:
+        sense.stick.direction_left = WindowSense().toggle_brightness()
+        sense.stick.direction_right = WindowSense().turn_off_prompt()
+        sense.stick.direction_down = WindowSense().show_setpoints()
+        sense.stick.direction_up = WindowSense().show_ambient()
+        sense.stick.direction_middle = WindowSense().refresh()
 
 
 def main_process():
@@ -352,10 +340,7 @@ def main_process():
 
 
 if __name__ == '__main__':
-    # Threading event to be used as flag to communicate between threads
-    #input_detected = threading.Event()
-    # Maps the functions to the main and event threads
     main_thread = threading.Thread(name='main process', target=main_process)
-#    event_thread = threading.Thread(name='stick_actions', target=stick_actions)
+    event_thread = threading.Thread(name='stick_actions', target=stick_actions)
     main_thread.start()
-#    event_thread.start()
+    event_thread.start()
