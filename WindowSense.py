@@ -301,16 +301,16 @@ def stick_actions():
         sleep(0.25)
         stick = sense.stick.get_events()
         if stick:
-            if stick.action == 'pressed':
-                if stick.direction == 'left':
+            if stick[0].action == 'pressed':
+                if stick[0].direction == 'left':
                     WindowSense().toggle_brightness()
-                elif stick.direction == 'right':
+                elif stick[0].direction == 'right':
                     WindowSense().turn_off_prompt()
-                elif stick.direction == 'down':
+                elif stick[0].direction == 'down':
                     WindowSense().show_setpoints()
-                elif stick.direction == 'up':
+                elif stick[0].direction == 'up':
                     WindowSense().show_ambient()
-                elif stick.direction == 'middle':
+                elif stick[0].direction == 'middle':
                     WindowSense().refresh()
 
 
