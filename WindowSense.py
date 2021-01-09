@@ -176,7 +176,7 @@ class WindowSense:
         now = datetime.now().isoformat(' ')
         log_timestamp = {'Timestamp': now}
         row_dict = {**log_timestamp, **self.forecast_temps}
-        file_exists = path.exists('WindowSense Log.csv')
+        file_exists = path.exists('Forecast Log.csv')
         with open('Forecast Log.csv', 'a+', newline='') as forecast_log:
             field_names = ['Timestamp'] + (sorted(self.forecast_temps))
             dict_writer = DictWriter(forecast_log, fieldnames=field_names)
@@ -318,7 +318,7 @@ def main_process():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
     WindowSense().refresh()
-    schedule.every(1).minutes.do(WindowSense().refresh)
+    schedule.every(30).minutes.do(WindowSense().refresh)
     while True:
         schedule.run_pending()
         sleep(1)
