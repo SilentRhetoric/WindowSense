@@ -294,53 +294,40 @@ class WindowSense:
         self.draw_graph()
 
 
-#def stick_actions():
-#    """While the main thread runs, this event thread checks the SenseHat
-#    joystick and calls a function based on the input direction."""
-
+def stick_actions():
+    """While the main thread runs, this event thread checks the SenseHat
+    joystick and calls a function based on the input direction."""
+    while True:
+        sleep(0.25)
+        stick = sense.stick.get_events()
+        if stick:
+            if stick.action == 'pressed':
+                if stick.direction == 'left':
+                    WindowSense().toggle_brightness()
+                elif stick.direction == 'right':
+                    WindowSense().turn_off_prompt()
+                elif stick.direction == 'down':
+                    WindowSense().show_setpoints()
+                elif stick.direction == 'up':
+                    WindowSense().show_ambient()
+                elif stick.direction == 'middle':
+                    WindowSense().refresh()
 
 
 def main_process():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
-    window_sense.refresh()
-    schedule.every(1).minutes.do(window_sense.refresh)
+    WindowSense().refresh()
+    schedule.every(1).minutes.do(WindowSense().refresh)
     while True:
         schedule.run_pending()
         sleep(1)
-#    stick = sense.stick.get_events()
-#    while True:
-#        if not input_detected.set():
-#            WindowSense().refresh()
-#            input_detected.wait(refresh_interval)
-#        else:
-#            if stick.action == 'pressed':
-#                if stick.direction == 'left':
-#                    WindowSense().toggle_brightness()
-#                    input_detected.clear()
-#                elif stick.direction == 'right':
-#                    WindowSense().turn_off_prompt()
-#                    input_detected.clear()
-#                elif stick.direction == 'down':
-#                    WindowSense().show_setpoints()
-#                    input_detected.clear()
-#                elif stick.direction == 'up':
-#                    WindowSense().show_ambient()
-#                    input_detected.clear()
-#                elif stick.direction == 'middle':
-#                    WindowSense().refresh()
-#                    input_detected.clear()
 
 
 if __name__ == '__main__':
     window_sense = WindowSense()
     sense = SenseHat()
     main_thread = threading.Thread(name='main process', target=main_process)
-    #event_thread = threading.Thread(name='stick_actions', target=stick_actions)
-    sense.stick.direction_left = window_sense.toggle_brightness()
-    sense.stick.direction_right = window_sense.turn_off_prompt()
-    sense.stick.direction_down = window_sense.show_setpoints()
-    sense.stick.direction_up = window_sense.show_ambient()
-    sense.stick.direction_middle = window_sense.refresh()
+    stick_thread = threading.Thread(name='stick_actions', target=stick_actions)
     main_thread.start()
-    #event_thread.start()
+    stick_thread.start()
