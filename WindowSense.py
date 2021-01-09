@@ -303,6 +303,7 @@ class WindowSense:
 def main_process():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
+    window_sense.refresh()
     schedule.every(1).minutes.do(window_sense.refresh)
     while True:
         schedule.run_pending()
