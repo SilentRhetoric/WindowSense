@@ -305,6 +305,7 @@ def stick_actions():
         sense.stick.direction_down = WindowSense().show_setpoints()
         sense.stick.direction_up = WindowSense().show_ambient()
         sense.stick.direction_middle = WindowSense().refresh()
+        sleep(0.25)
 
 
 def main_process():
