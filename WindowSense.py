@@ -12,8 +12,6 @@ from sense_hat import SenseHat  # Enables all the SenseHAT functions
 from subprocess import run  # Enables the operating system shutdown command
 from time import sleep  # For LED animations
 
-sense = SenseHat()
-
 
 class WindowSense:
     """Powers the WindowSense Raspberry Pi SenseHAT project through
@@ -300,19 +298,19 @@ def stick_actions():
     """While the main thread runs, this event thread checks the SenseHat
     joystick and calls a function based on the input direction."""
     while True:
-        sense.stick.direction_left = WindowSense().toggle_brightness()
-        sense.stick.direction_right = WindowSense().turn_off_prompt()
-        sense.stick.direction_down = WindowSense().show_setpoints()
-        sense.stick.direction_up = WindowSense().show_ambient()
-        sense.stick.direction_middle = WindowSense().refresh()
+        sense.stick.wait_for_event(emptybuffer=True)
+        sense.stick.direction_left = window_sense.toggle_brightness()
+        sense.stick.direction_right = window_sense.turn_off_prompt()
+        sense.stick.direction_down = window_sense.show_setpoints()
+        sense.stick.direction_up = window_sense.show_ambient()
+        sense.stick.direction_middle = window_sense.refresh()
         sleep(0.25)
 
 
 def main_process():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
-    refresh = WindowSense().refresh()
-    schedule.every(1).minutes.do(refresh)
+    schedule.every(1).minutes.do(window_sense.refresh())
     while True:
         schedule.run_pending()
         sleep(1)
@@ -341,6 +339,8 @@ def main_process():
 
 
 if __name__ == '__main__':
+    window_sense = WindowSense()
+    sense = SenseHat()
     main_thread = threading.Thread(name='main process', target=main_process)
     event_thread = threading.Thread(name='stick_actions', target=stick_actions)
     main_thread.start()
