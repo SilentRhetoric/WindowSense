@@ -1,16 +1,15 @@
 import json  # Writing JSON files for thermostat traits output
 import requests  # For HTTP-based API calls
-import schedule
+import schedule  # Creates and manages a job to keep the WS updating
 import threading  # Enables multiple threads to be running at once
 from csv import DictWriter  # For logging to .csv
 from datetime import datetime  # To add timestamps to the log
 from dotenv import load_dotenv  # Load environment variables from files
-from os import path, getenv  # Get API credentials from environment variables
+from os import path, getenv  # Get API creds from environment variables
 from pyowm.owm import OWM  # Convenience wrapper for the OWM API
 from sense_hat import SenseHat  # Enables all the SenseHAT functions
-#from signal import pause
-from subprocess import run  # Enables the operating system shutdown command
-from time import sleep  # For LED animations
+from subprocess import run  # Enables running the shutdown command
+from time import sleep  # For short delays in animations and loops
 
 
 class WindowSense:
@@ -60,22 +59,22 @@ class WindowSense:
     # Settings for heat/cool setpoints & display colors
     thermostat_traits = {
         'heat_setpoint': {
-            'value': 65,  # Defaulted if no Nest connected, initialized as int
+            'value': 65,  # Nest returns int; default if no Nest setting
             'text': 'Heat to',
             'color': led_settings['orange']
             },
         'cool_setpoint': {
-            'value': 75,  # Defaulted if no Nest connected, initialized as int
+            'value': 75,  # Nest returns int; default if no Nest setting
             'text': 'Cool to',
             'color': led_settings['blue']
             },
         'temperature': {
-            'value': 70.00,  # Initialized as a float
+            'value': 70.00,  # Nest returns float
             'text': 'Temp',
             'color': led_settings['white']
             },
         'humidity': {
-            'value': 50,  # Initialized as an int
+            'value': 50,  # Nest returns int
             'text': 'Hum',
             'color': led_settings['cyan']
             },
@@ -105,7 +104,7 @@ class WindowSense:
         client_secret = getenv('CLIENT_SECRET')
         refresh_token = getenv('REFRESH_TOKEN')
         project_id = getenv('PROJECT_ID')
-        # Refresh token
+        # Refresh the API token
         params = (
             ('client_id', client_id),
             ('client_secret', client_secret),
@@ -115,9 +114,8 @@ class WindowSense:
         response = requests.post('https://www.googleapis.com/oauth2/v4/token', params=params)
         response_json = response.json()
         access_token = response_json['token_type'] + ' ' + response_json['access_token']
-        #print('Access token: ' + access_token)
 
-        # Get devices
+        # Get devices from Google
         url_get_devices = 'https://smartdevicemanagement.googleapis.com/v1/enterprises/' + project_id + '/devices'
         headers = {
             'Content-Type': 'application/json',
@@ -126,7 +124,6 @@ class WindowSense:
         response = requests.get(url_get_devices, headers=headers)
         response_json = response.json()
         device_0_name = response_json['devices'][0]['name']  # Assumes one Nest
-        #print(response.json())
 
         # Get device traits
         url_get_device = 'https://smartdevicemanagement.googleapis.com/v1/' + device_0_name
@@ -145,12 +142,12 @@ class WindowSense:
         #cool_setpoint = response_json['traits']['sdm.devices.traits.ThermostatTemperatureSetpoint']['coolCelsius']
         #self.thermostat_traits['cool_setpoint']['value'] = self.c_to_f(cool_setpoint)
 
+        # Write the Nest data to a file for inspection
         with open("thermostat_traits.json", "w") as thermostat_traits:
             json.dump(response_json, thermostat_traits, indent=4)
 
-        #print(json.dumps(response_json))
-        print('Humidity:', humidity)
         print('Temperature:', temperature)
+        print('Humidity:', humidity)
         print('Heat setpoint:', heat_setpoint)
         #print('Cool setpoint:', cool_setpoint)
 
@@ -162,7 +159,6 @@ class WindowSense:
         api_key = getenv('API_KEY')
         lat = float(getenv('LATITUDE'))
         lon = float(getenv('LONGITUDE'))
-        #print(api_key)
         print(f"{lat}, {lon}")
         owm = OWM(api_key)
         mgr = owm.weather_manager()
@@ -171,14 +167,14 @@ class WindowSense:
             self.forecast_temps[key] = one_call.forecast_hourly[key].temperature().get('temp')
         print(self.forecast_temps)
 
-    def log_temps(self):
-        """Logs the forecast temps to a .csv file with a timestamp."""
+        # Logs the forecast temps to a .csv file
         now = datetime.now().isoformat(' ')
         log_timestamp = {'Timestamp': now}
-        row_dict = {**log_timestamp, **self.forecast_temps}
+        coords = {'Lat': lat, 'Lon': lon}
+        row_dict = {**log_timestamp, **coords, **self.forecast_temps}
+        field_names = row_dict.keys()
         file_exists = path.exists('Forecast Log.csv')
         with open('Forecast Log.csv', 'a+', newline='') as forecast_log:
-            field_names = ['Timestamp'] + (sorted(self.forecast_temps))
             dict_writer = DictWriter(forecast_log, fieldnames=field_names)
             if not file_exists:
                 dict_writer.writeheader()
@@ -191,17 +187,25 @@ class WindowSense:
         Each column of the SenseHat RGB LED matrix from left to right
         is one hour.  Each row is equal to half of your comfort range.
 
-        The middle two rows represent comfortable temperatures--a good
-        opportunity to open the windows.  The upper and lower rows mean
-        it will be too hot or cold outside to open the windows."""
+        The middle two rows represent comfortable temperatures between
+        the Nest setpoints and a good opportunity to open the windows.
+        The upper and lower rows mean it may be too hot or cold outside
+        to open the windows."""
         leds = self.led_settings
         graph = self.graph_colors
         therm = self.thermostat_traits
-        midpoint = (therm['heat_setpoint']['value'] + therm['cool_setpoint']['value']) / 2
-        step_size = (therm['heat_setpoint']['value'] - therm['cool_setpoint']['value']) / 2
+        heat = therm['heat_setpoint']['value']
+        cool = therm['cool_setpoint']['value']
+        midpoint = (heat + cool) / 2
+        step_size = (heat - cool) / 2
         sense.clear()
         sense.rotation = self.led_settings['rotation']
         sense.low_light = self.led_settings['dim_state']
+        if heat < self.forecast_temps[0] < cool:
+            sense.show_message('Someone ought to open up a window!',
+                               scroll_speed=leds['scroll_speed'],
+                               text_colour=leds['green'],
+                               back_colour=leds['off'])
         for key in sorted(self.forecast_temps):
             forecast_temp = self.forecast_temps[key]
             if forecast_temp > midpoint:
@@ -222,7 +226,7 @@ class WindowSense:
                     sleep(self.led_settings['graph_speed'])
 
     def show_setpoints(self):
-        """Displays the Nest thermostat heat/cool setpoints."""
+        """Displays the Nest thermostat heat and cool setpoints."""
         leds = self.led_settings
         therm = self.thermostat_traits
         heat_setpoint_message = f"{therm['heat_setpoint']['text']} {therm['heat_setpoint']['value']}"
@@ -275,7 +279,7 @@ class WindowSense:
             self.draw_graph()
 
     def shutdown(self):
-        """Warns to wait before unplugging and then shuts the Pi down."""
+        """Warns to wait before unplugging & then shuts the Pi down."""
         leds = self.led_settings
         program = self.program_settings
         sense.show_message(program['wait message']['text'],
@@ -287,14 +291,13 @@ class WindowSense:
 
     def refresh(self):
         """Runs through the functions to get thermostat traits, get a
-        forecast from OWM, log the forecast, and draw the LED graph."""
+        forecast from OWM, and draw the LED graph."""
         self.get_thermostat()
         self.get_forecast()
-        self.log_temps()
         self.draw_graph()
 
 
-def stick_actions():
+def joystick():
     """While the main thread runs, this event thread checks the SenseHat
     joystick and calls a function based on the input direction."""
     while True:
@@ -314,7 +317,7 @@ def stick_actions():
                     WindowSense().refresh()
 
 
-def main_process():
+def background():
     """Gets thermostat updates and forecasts periodically to update the
     graph, but reacts when joystick input is received."""
     WindowSense().refresh()
@@ -327,7 +330,7 @@ def main_process():
 if __name__ == '__main__':
     window_sense = WindowSense()
     sense = SenseHat()
-    main_thread = threading.Thread(name='main process', target=main_process)
-    stick_thread = threading.Thread(name='stick_actions', target=stick_actions)
+    main_thread = threading.Thread(name='background', target=background)
+    stick_thread = threading.Thread(name='joystick', target=joystick)
     main_thread.start()
     stick_thread.start()
