@@ -146,10 +146,10 @@ class WindowSense:
         with open("thermostat_traits.json", "w") as thermostat_traits:
             json.dump(response_json, thermostat_traits, indent=4)
 
-        print('Temperature:', temperature)
-        print('Humidity:', humidity)
-        print('Heat setpoint:', heat_setpoint)
-        #print('Cool setpoint:', cool_setpoint)
+        print('Temperature:', self.thermostat_traits['temperature']['value'])
+        print('Humidity:', self.thermostat_traits['humidity']['value'])
+        print('Heat setpoint:', self.thermostat_traits['heat_setpoint']['value'])
+        #print('Cool setpoint:', self.thermostat_traits['cool_setpoint']['value'])
 
     def get_forecast(self):
         """Assembles an OpenWeatherMap API call using pyowm, gets the
@@ -193,11 +193,10 @@ class WindowSense:
         to open the windows."""
         leds = self.led_settings
         graph = self.graph_colors
-        therm = self.thermostat_traits
-        heat = therm['heat_setpoint']['value']
-        cool = therm['cool_setpoint']['value']
-        midpoint = (heat + cool) / 2
-        step_size = (heat - cool) / 2
+        heat = self.thermostat_traits['heat_setpoint']['value']
+        cool = self.thermostat_traits['cool_setpoint']['value']
+        midpoint = (cool + heat) / 2
+        step_size = (cool - heat) / 2
         sense.clear()
         sense.rotation = self.led_settings['rotation']
         sense.low_light = self.led_settings['dim_state']
