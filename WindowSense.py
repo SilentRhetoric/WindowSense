@@ -212,17 +212,18 @@ class WindowSense:
                     if forecast_temp > (midpoint + step_size * (3-i)):
                         sense.set_pixel(key, i, leds[graph[i]])
                         sleep(self.led_settings['graph_speed'])
-            if midpoint > forecast_temp:
+            if forecast_temp < midpoint:
                 for i in range(3):
                     if forecast_temp < (midpoint - step_size * i):
                         sense.set_pixel(key, i+4, leds[graph[i+4]])
                         sleep(self.led_settings['graph_speed'])
-                if forecast_temp > 32:
-                    sense.set_pixel(key, 7, leds[graph[7]])
-                    sleep(self.led_settings['graph_speed'])
-                if forecast_temp <= 32:
+                if forecast_temp < 32 < (midpoint - step_size * 3):
                     sense.set_pixel(key, 7, leds['white'])
                     sleep(self.led_settings['graph_speed'])
+                elif 32 < forecast_temp < (midpoint - step_size * 3):
+                    sense.set_pixel(key, 7, leds[graph[7]])
+                    sleep(self.led_settings['graph_speed'])
+
 
     def show_setpoints(self):
         """Displays the Nest thermostat heat and cool setpoints."""
