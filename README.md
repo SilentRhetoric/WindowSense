@@ -29,7 +29,7 @@ to throw open the windows for a cross-breeze.
 
 ## The WindowSense display
 
-![Explainer Graphic](Media/ExplainerGraphic.jpg)
+![Explainer Graphic](Media/ExplainerGraphic.jpeg)
 
 ## How it works
 
