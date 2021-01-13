@@ -1,5 +1,6 @@
 # WindowSense
-"Someone ought to open up a window!"
+
+`"Someone ought to open up a window!"`
 
 Get a sense of when to open your windows for fresh air with WindowSense.
 Set your thermostat for comfort and save money on heating and cooling by 
@@ -23,17 +24,34 @@ I also wanted to make sure we were not letting in hot late-afternoon air that
 would kick on our air conditioning or leaving the windows open too long and 
 allowing the house to get too cold from the chilly, nighttime air.  Depending 
 on the day, there was sometimes just a narrow window of opportunity to let in 
-fresh air that would feel just right--not too hot or too cold.  And so the idea
+fresh air that would feel just right and not waste energy.  And so the idea
 was born to create a smart device to tell us when it would be comfortable--and efficient--
 to throw open the windows for a cross-breeze.
 
 ## The WindowSense display
 
+WindowSense uses a stylized graph in a spectrum of colors to show when it will be 
+cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
+of forecasts from now on the left to the future on the right. 
+
 ![Explainer Graphic](Media/ExplainerGraphic.jpeg)
+
+Your thermostat's comfort range, as defined by the heating and cooling setpoint, is represented by 
+the middle two rows in green.  Outside temps closer to the top of your comfort range place 
+the green square higher; cooler temps closer to the bottom of your comfort range place it lower.
+
+Each row of the graph represents steps of equal size, to give a relative impression of 
+how much colder or hotter it is outside than you would want it to be in your home.  If your comfort range
+is heat to 65F / cool to 75F, for example, then each block is 5 degrees F.  Additionally, if the forecast will 
+be below freezing, the bottom row will turn white to indicate the possibility of snow & ice.
+
+With this information available at a glance, it is easy to know when you can open 
+your windows to be comfortable and efficient.  You can also plan for your day, see the ebb
+and flow of daily temperatures, and prepare your home or garden if temperatures will drop below freezing.  
 
 ## How it works
 
-WindowSense runs on a Raspberry Pi  and helps your keep your home fresh through a few functions:
+WindowSense runs as a Python script on an internet-connected Raspberry Pi and helps your keep your home fresh through a few functions:
 
 1. Reading your Nest thermostat's heat & cool setpoints via Google's smart device access API
 2. Getting the weather forecast from OpenWeatherMap's API using the pyowm library 
@@ -56,64 +74,3 @@ the technologies used to create WindowSense
 
 I want to extend many thanks to the Raspberry Pi Foundation and the countless makers and teachers
 who comprise the incredible community around these devices that inspired and helped me to create this project.
-
-Not long after COVID began to reshape our lives I found myself with lots of time at home 
-and an itch to start a new indoor hobby.  Intrigued by a tech article about someone's 
-Raspberry Pi project, I went down the rabbit hole and soon had one of my own.  Aside from
-one semester of C++ in college 15 years ago, however, I had minimal experience with computer programming, 
-so I set out learn on my own.  
-
-I have been continually amazed at the quantity and quality 
-of materials which have been created by this generous community to help people like me 
-learn about computer hardware, coding, and myriad real-world project applications.  In addition
-to my gratitude here and some small monetary donations to nonprofits, I also 
-want to give back to this community by paying forward some of the help
-I have received.  For that reason, I have enriched this repo with a variety of
-resources that I found valuable on my learning journey and which I hope
-will enable and inspire others to become makers of their ideas.
-
-
-
-
-
-
-The WindowSense program creates a graphical display to indicate if the
-outside temperature will be comfortable if you open your windows for 
-fresh air.  You can set your preferred inside temperature comfort range 
-with min and max temperature values.  The program gets hourly local 
-temperature forecasts for the next 8 hours and graphs them relative to 
-your specified inside comfort range.  You can then see at a glance when 
-it will be good to open or close your windows to maintain a comfortable 
-temperature inside your home.
-
-When outside temps are forecasted to be within your comfort range, the 
-screen will display a green square, either "high" on row 4 if the outside
-temperature will be nearer the high end of your comfort range or "low" on row 5
-if the outside temperature will be nearer the low end of your comfort range.
-
-When outside temperatures will be beyond your comfort range, the screen will
-display additional squares above or below your green comfort range to indicate
-that the forecast expects hotter temperatures, in progressively redder squares,
-or colder temperatures, in progressive bluer squares, above or below your green
-comfort range, respectively.
-
-The temperature bands represented by the display rows are set dynamically to
-half of the difference between your inside comfort range low and high settings.
-For example, a comfort range of 65-75 will yield screen pixels that each
-represent five-degree temperature differences above or below the average, 70,
-of your comfort range.
-
-The forecasts are updated hourly and the screen refreshed so that the graph
-always shows you the next eight hours of expected temperatures relative to your
-comfort range.
-
-This function uses the PyOWM library's one_call module to call
-the Open Weather Map API for a OneCall report that contains
-various current and forecast data.  The call requests forecast
-data on an hourly basis and specifically gets the regular
-forecast temperatures from the temperature section (as opposed
-to the "feels like" temperature).
-
-Finally, the function calls another function draw_graph and
-passes the list of hourly forecast temperatures to it so that
-the screen graph can be drawn based on the

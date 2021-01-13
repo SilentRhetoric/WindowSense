@@ -1,8 +1,5 @@
 # Setting Up Your Raspberry Pi
 
-## Hardware Build
-
-
 
 ## Headless Access
 
