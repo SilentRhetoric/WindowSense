@@ -32,7 +32,7 @@ to throw open the windows for a cross-breeze.
 
 WindowSense uses a stylized graph in a spectrum of colors to show when it will be 
 cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
-of forecasts from now on the left to the future on the right. 
+of forecasts with now on the left and the next seven hours from left to right. 
 
 ![Explainer Graphic](Media/WindowSenseDisplay.PNG)
 
@@ -58,7 +58,7 @@ WindowSense runs as a Python script on an internet-connected Raspberry Pi and he
 3. Dynamically calculating and drawing a graph that relates the outside temps to
 your personal comfort settings
 4. Providing temp & humidity readouts, setpoint readouts, brightness adjustments, and 
-a way to safely shut down the Raspberry Pi.
+a way to safely shut down the Raspberry Pi
 
 ## What's in this repo
 
@@ -74,3 +74,7 @@ the technologies used to create WindowSense
 
 I want to extend many thanks to the Raspberry Pi Foundation and the countless makers and teachers
 who comprise the incredible community around these devices that inspired and helped me to create this project.
+
+#### Disclaimer
+This project is in no way associated with Google, Nest, OpenWeatherMap, the Raspberry Pi Foundation, or any other company mentioned in this repository.
+

@@ -12,7 +12,7 @@
 
 ## 3D Printing the Case
 
-Link to the STL at PrusaPrinters & Thingiverse
+Link to the STL at PrusaPrinters & Thingiverse  
 [Matte filament]()
 
 ## Making a screen
