@@ -1,19 +1,20 @@
 # Building the WindowSense
 
 ## Parts List
-[Raspberry Pi Zero WH]()  
-[Raspberry Pi Sense HAT]()  
-[Nylon standoffs x2]()  
-[Screws, long x2]()  
-[Screws, short x2]()  
+[Raspberry Pi Zero WH](https://www.adafruit.com/product/3708)  
+[Raspberry Pi Sense HAT](https://www.adafruit.com/product/2738)  
+M2.5 screws, 15 mm x 2  
+M2.5 screws, 5 mm x 2  
+Nylon spacers 11 mm x 2  
 [USB-to-Micro cable](https://www.amazon.com/dp/B07WLRNGZR/ref=cm_sw_em_r_mt_dp_vM6.FbT507SBY?_encoding=UTF8&psc=1)  
-[Clear plastic panel]()  
-[White vinyl decal]()  
+[Clear acrylic panel](https://www.homedepot.com/p/OPTIX-8-in-x-10-in-x-0-050-in-Clear-Non-Glare-Acrylic-Sheet-1X09241A/300085223)  
+[White vinyl decal](https://www.michaels.com/oracal-631-exhibition-cal-vinyl/M10498459.html?dwvar_M10498459_size=12%22%20x%2012%22&dwvar_M10498459_color=Turquoise)  
+(Just links)
 
 ## 3D Printing the Case
 
 Link to the STL at PrusaPrinters & Thingiverse  
-[Matte filament]()
+[Protopasta Matte Fiber HTPLA - White (50g coil)](https://www.proto-pasta.com/collections/all/products/matte-fiber-htpla-white)
 
 ## Making a screen
 
@@ -29,7 +30,7 @@ Using a shape blade, score and then carefully break the plastic panel into a rec
 5. Plug in the USB cable and wrap it up around the standoff toward the top of the case and then back down so it can exit the case straight out the bottom
 
 ### Front cover
-1. With the piece of plastic panel you cut, cut a slightly larger rectangle of the vinyl film
+1. With the piece of acrylic panel you cut, cut a slightly larger rectangle of the vinyl film
 2. Prepare the plastic panel with a solution of soapy water so that you can reposition and smooth the vinyl when you apply it (it will dry invisibly)
 3. Remove the vinyl's backing and apply it carefully to the plastic and then gently smooth out any bubbles using your finger or something with an edge that won't scratch the vinyl, such as a credit card
 4. Once you are happy with the application of the vinyl, trim off any excess around the edges
