@@ -1,5 +1,3 @@
-![Logo](Media/WindowSense_logo_480.jpeg)
-
 # Setting Up A Headless Raspberry Pi
 This is not a complete guide to getting a headless Pi Zero set up from scratch, but it is 
 a collection of my personal notes and links which cover the vast majority of the configuration required to do so.

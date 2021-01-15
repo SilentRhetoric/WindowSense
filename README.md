@@ -1,4 +1,4 @@
-![Logo](Media/WindowSense_logo_480.jpeg)
+# WindowSense
 
 `"Someone ought to open up a window!"`
 

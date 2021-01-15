@@ -1,5 +1,3 @@
-![Logo](Media/WindowSense_logo_480.jpeg)
-
 # Learning Resources
 
 I want to share a variety of resources that I have used as a novice 

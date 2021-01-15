@@ -1,5 +1,3 @@
-![Logo](Media/WindowSense_logo_480.jpeg)
-
 # Configuring the Python Environment
 
 This program was written and tested on Python 3.7 to ensure compatibility with 
