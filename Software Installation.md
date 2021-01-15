@@ -34,11 +34,11 @@ Create your own .env file named `owm_config.env` with three key=value pairs that
 
 You can sign up for a Google Device Access account for five dollars to create a project. 
 Separately, you need to create an OAuth 2.0 Client ID for your Google account through the Google Cloud Platform Console. 
-As this process is quite involved, I have linked to some helpful resources for these processes in the [Learning Resources.md](LearningResources.md) file in this repo. 
+As this process is quite involved, I have linked to some helpful resources for these processes in the [Learning Resources.md](Learning Resources.md) file in this repo. 
 Again, the code does not contain any of these values for security purposes.  Once you have these IDs, tokens, etc. do not share them with anyone!  
 
 
-Create a second .env file named `google_auth.env` with the following key=value pairs:
+Create a second file named `google_auth.env` with the following key=value pairs:
 
 
 `PROJECT_ID=`  
