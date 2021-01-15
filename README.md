@@ -1,4 +1,4 @@
-![Logo](Media/WIndowSense_logo_240.jpeg)
+![Logo](Media/WindowSense_logo_480.jpeg)
 
 `"Someone ought to open up a window!"`
 

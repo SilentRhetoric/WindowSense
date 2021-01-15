@@ -1,4 +1,4 @@
-![Logo](Media/WIndowSense_logo_240.jpeg)
+![Logo](Media/WindowSense_logo_480.jpeg)
 
 # Setting Up A Headless Raspberry Pi
 This is not a complete guide to getting a headless Pi Zero set up from scratch, but it is 
