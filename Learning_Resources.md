@@ -1,3 +1,5 @@
+![Logo](Media/WIndowSense_logo_240.jpeg)
+
 # Learning Resources
 
 I want to share a variety of resources that I have used as a novice 

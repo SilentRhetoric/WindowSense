@@ -163,8 +163,8 @@ class WindowSense:
         owm = OWM(api_key)
         mgr = owm.weather_manager()
         one_call = mgr.one_call(lat=lat, lon=lon, exclude='minutely,daily', units='imperial')
-        for key in self.forecast_temps:
-            self.forecast_temps[key] = one_call.forecast_hourly[key].temperature().get('temp')
+        for hour in self.forecast_temps:
+            self.forecast_temps[hour] = one_call.forecast_hourly[hour].temperature().get('temp')
         print(self.forecast_temps)
 
         # Logs the forecast temps to a .csv file
@@ -223,7 +223,6 @@ class WindowSense:
                 elif 32 < forecast_temp < (midpoint - step_size * 3):
                     sense.set_pixel(key, 7, leds[graph[7]])
                     sleep(self.led_settings['graph_speed'])
-
 
     def show_setpoints(self):
         """Displays the Nest thermostat heat and cool setpoints."""

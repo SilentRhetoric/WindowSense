@@ -1,4 +1,4 @@
-# WindowSense
+![Logo](Media/WIndowSense_logo_240.jpeg)
 
 `"Someone ought to open up a window!"`
 
@@ -34,7 +34,7 @@ WindowSense uses a stylized graph in a spectrum of colors to show when it will b
 cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
 of forecasts with now on the left and the next seven hours from left to right. 
 
-![Explainer Graphic](Media/WindowSenseDisplay.PNG)
+![Explainer Graphic](Media/WindowSense_explainer_1080.jpeg)
 
 Your thermostat's comfort range, as defined by the heating and cooling setpoint, is represented by 
 the middle two rows in green.  Outside temps closer to the top of your comfort range place 
