@@ -2,6 +2,8 @@
 
 `"Someone ought to open up a window!"`
 
+[![](http://img.youtube.com/vi/c8vSSSKU0A4/0.jpg)](http://www.youtube.com/watch?v=c8vSSSKU0A4 "WindowSense - First Demo")
+
 Get a sense of when to open your windows for fresh air with WindowSense.
 Set your thermostat for comfort and save money on heating and cooling by 
 letting in the breeze at the best times.  
