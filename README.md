@@ -77,6 +77,6 @@ the technologies used to create WindowSense
 I want to extend many thanks to the Raspberry Pi Foundation and the countless makers and teachers
 who comprise the incredible community around these devices that inspired and helped me to create this project.
 
-#### Disclaimer
-This project is in no way associated with Google, Nest, OpenWeatherMap, the Raspberry Pi Foundation, or any other company mentioned in this repository.
+## Disclaimer
+This project was created as an educational experience and is in no way associated with Google, Nest, OpenWeatherMap, the Raspberry Pi Foundation, or any other company mentioned in this repository.
 
