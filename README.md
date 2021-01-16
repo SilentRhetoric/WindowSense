@@ -16,7 +16,7 @@ The RGB LED matrix display uses a rainbow of colors to signal how the temperatur
 will change over the next eight hours, so you can plan ahead and 
 maximize your home's comfort and efficiency.
 
-## The inspiration
+## The Inspiration
 
 There's something special about air that's just the right temperature such that
 you can't feel it at all.  Last fall, when the days were still warm and the 
@@ -30,7 +30,7 @@ fresh air that would feel just right and not waste energy.  So the idea
 was born to create a smart device to tell us when it would be comfortable--and efficient--
 to throw open the windows for a cross-breeze.
 
-## The WindowSense display
+## The WindowSense Display
 
 WindowSense uses a stylized graph in a spectrum of colors to show when it will be 
 cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
@@ -51,7 +51,7 @@ With this information available at a glance, it is easy to know when you can ope
 your windows to be comfortable and efficient.  You can also plan for your day, see the ebb
 and flow of daily temperatures, and prepare your home or garden if temperatures will drop below freezing.  
 
-## How it works
+## How It Works
 
 WindowSense runs as a Python script on an internet-connected Raspberry Pi and helps your keep your home fresh through a few functions:
 
@@ -62,7 +62,7 @@ your personal comfort settings
 4. Providing temp & humidity readouts, setpoint readouts, brightness adjustments, and 
 a way to safely shut down the Raspberry Pi
 
-## What's in this repo
+## Respository Contents
 
 This repository includes the Python script which runs WindowSense, as well as some additional resources, including:
 
@@ -72,7 +72,7 @@ This repository includes the Python script which runs WindowSense, as well as so
 4. "Learning Resources" - Supplemental learning resources for those interested in learning more about 
 the technologies used to create WindowSense
 
-## Thanks and acknowledgments
+## Thanks and Acknowledgments
 
 I want to extend many thanks to the Raspberry Pi Foundation and the countless makers and teachers
 who comprise the incredible community around these devices that inspired and helped me to create this project.
