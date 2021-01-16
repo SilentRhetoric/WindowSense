@@ -15,10 +15,10 @@ your preferred build of the OS onto a Micro SD card.
 #### To connect via SSH
 
 - Set the Host Name (or IP address) field to raspberrypi.local
-- By default the Port should be set to 22 and Connection type should be set to SSH
+- By default, the Port should be set to 22 and Connection type should be set to SSH
 - Click Open; if you see a Security Alert select Yes
-- A new terminal window should appear prompting you for a user name
-- The default user name is `pi`
+- A new terminal window should appear prompting you for a username
+- The default username is `pi`
 - The default password is `raspberry`
 
 To enable VNC (should also change hostname & password)  
@@ -36,7 +36,7 @@ To get updates:
 `sudo apt upgrade -y`
 
 #### Wifi Settings
-To edit or review your wifi settings, run this command
+To edit or review your Wi-Fi settings, run this command
 
 `sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
 

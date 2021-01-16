@@ -12,21 +12,21 @@ WindowSense integrates the temperature forecast with your Nest thermostat
 comfort settings to visualize when the outside air will be just right to
 throw open the windows for fresh air that won't make your home too hot or cold.
 
-The RGB LED matrix display uses a rainbow of colors to signal what's happening
-with the temperature over the next eight hours so you can plan ahead and 
+The RGB LED matrix display uses a rainbow of colors to signal how the temperature 
+will change over the next eight hours, so you can plan ahead and 
 maximize your home's comfort and efficiency.
 
 ## The inspiration
 
 There's something special about air that's just the right temperature such that
 you can't feel it at all.  Last fall, when the days were still warm and the 
-nights were getting cold, my wife and I were trying to open the windows as much as possible
+nights getting cold, my wife and I were trying to open the windows as much as possible
 for fresh air. However, as the resident steward of the thermostat, 
 I also wanted to make sure we were not letting in hot late-afternoon air that 
 would kick on our air conditioning or leaving the windows open too long and 
 allowing the house to get too cold from the chilly, nighttime air.  Depending 
 on the day, there was sometimes just a narrow window of opportunity to let in 
-fresh air that would feel just right and not waste energy.  And so the idea
+fresh air that would feel just right and not waste energy.  So the idea
 was born to create a smart device to tell us when it would be comfortable--and efficient--
 to throw open the windows for a cross-breeze.
 
@@ -34,7 +34,7 @@ to throw open the windows for a cross-breeze.
 
 WindowSense uses a stylized graph in a spectrum of colors to show when it will be 
 cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
-of forecasts with now on the left and the next seven hours from left to right. 
+of forecasts, with now on the left and the next seven hours from left to right. 
 
 ![Explainer Graphic](Media/WindowSense_explainer_1080.jpeg)
 

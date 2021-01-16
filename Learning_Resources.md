@@ -7,7 +7,7 @@ their journey as a maker.
 
 ## Backstory
 
-Not long after COVID began to reshape our lives I found myself with lots of time at home 
+Not long after COVID-19 began to reshape our lives I found myself with lots of time at home 
 and an itch to start a new indoor hobby.  Intrigued by a tech article about someone's 
 Raspberry Pi project, I went down the rabbit hole and soon bought one of my own.  Aside from
 one semester of C++ in college 15 years ago, however, I had minimal experience with computer programming, 
@@ -30,7 +30,7 @@ For real-time help, I have chatted with the knowledgeable folks on the [Raspberr
 
 ### Raspberry Pi Zero WH
 This project uses a [Raspberry Pi Zero WH](https://www.raspberrypi.org/products/raspberry-pi-zero-w/), which is a tiny computer that has
-fourty GPIO conections, integrated WifI and Bluetooth (the "W") and pre-soldered headers 
+40 GPIO connections, integrated WifI and Bluetooth (the "W") and pre-soldered headers 
 on those GPIO so HATs (hardware attached on top) can be connected without needing to 
 solder anything.  You could also use a regular W and solder on a header.  Although the SenseHAT is often
 shown on top of a full-sized Raspberry Pi 3 or 4, that much computing power is overkill for this
@@ -41,7 +41,7 @@ The [Raspberry Pi Sense HAT ](https://www.raspberrypi.org/products/sense-hat/) i
 incorporate a collection of sensors, a 5-way joystick button, and an 8x8 RGB LED matrix as a way to learn how to do a variety of 
 physical computing things with a Raspberry Pi.  This project utilizes the display and the joystick for interactive elements.
 
-There is an [introductory walkthrough to the Sense HAT](https://projects.raspberrypi.org/en/projects/getting-started-with-the-sense-hat) which I found very helpful.
+There is an [introductory walk-through to the Sense HAT](https://projects.raspberrypi.org/en/projects/getting-started-with-the-sense-hat) which I found very helpful.
 The [API guide for the Sense HAT](https://pythonhosted.org/sense-hat/api/) explains how to interact with it, and the full [source code for the SenseHat](https://github.com/astro-pi/python-sense-hat) is also available on Github.
 
 ### Raspberry Pi OS
