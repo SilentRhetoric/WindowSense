@@ -35,9 +35,9 @@ to throw open the windows for a cross-breeze.
 
 ## The WindowSense Display
 
-WindowSense uses a stylized graph in a spectrum of colors to show when it will be 
-cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
-of forecasts, with now on the left and the next seven hours from left to right. 
+WindowSense uses a stylized graph in a rainbow of colors to show when it will be
+cold, warm, or comfortable outside in the coming hours.  The 8x8 RGB LED matrix represents each hour's forecasts, 
+with now, on the left, and then the next seven hours, from left to right.
 
 ![Display Explainer Graphic](Media/WindowSense_explainer_1080.jpeg)
 
@@ -64,8 +64,11 @@ your personal comfort settings
   - Ambient temp & humidity readout from the Nest
   - Thermostat heat & cool setpoint readouts
   - LED brightness adjustment
-  - Manually refreshing the graph
-  - A way to safely shut down the Raspberry Pi
+  - Manual forecast & graph refresh
+  - A safe shutdown process
+
+Additionally, temperature forecast data is written to a .csv file for future data analysis, 
+and the Nest thermostat traits are written to a JSON file to allow investigation of deeper integration opportunities.
 
 ## Repository Contents
 
