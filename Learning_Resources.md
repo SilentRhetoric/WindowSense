@@ -1,10 +1,5 @@
 # Learning Resources
 
-I want to share a variety of resources that I have used as a novice 
-maker to learn various skills I used to create this project.  I enjoy collecting 
-bookmarks and hope that these links can help others find quality resources on 
-their journey as a maker.
-
 ## Backstory
 
 Not long after COVID-19 began to reshape our lives I found myself with lots of time at home 
@@ -15,13 +10,11 @@ so I set out learn on my own.
 
 I have been continually amazed at the quantity and quality 
 of materials which have been created by this generous community to help people like me 
-learn about computer hardware, coding, and myriad real-world project applications.  In addition
-to my gratitude here and some small monetary donations to nonprofits, I also 
-want to give back to this community by paying forward some of the help
-I have received.  For that reason, I have enriched this repo with a variety of
+learn about computer hardware, coding, and myriad real-world project applications.  I
+want to give back to this community by paying forward just a fraction of the help
+I have received.  For that reason, I have curated here a variety of
 resources that I found valuable on my learning journey and which I hope
 will enable and inspire others to become makers of their ideas.
-
 
 ## Raspberry Pi
 
@@ -80,7 +73,7 @@ One could not mention 3D printing without mentioning [Thingiverse](https://www.t
 site for sharing 3D models.  It is a trove of interesting models, from the functional to the artistic, and 
 a great place to get inspired by what is possible to create through 3D printing.
 
-## Python
+## Python & Coding
 
 ### PyCharm
 I have used a variety of Python IDEs while learning the language and developing WindowSense, but [PyCharm](https://www.jetbrains.com/pycharm/)
@@ -88,14 +81,14 @@ is the best by far.  This is a sophisticated tool for professional developers, b
 be very well-designed, mostly intuitive, and helpful in debugging, linting, and refactoring my code.  There was a bit of learning curve, 
 but I found it to be well worth a few hours spent learning the application.
 
-#### Codecademy
+### Codecademy
 I did a few basic tutorials on Python using a Raspberry Pi book, but I realized pretty quickly when reading
 the code of other people's Python-based projects that I needed to study the language more before I could create something of my own.
 I shopped around a little bit and signed up for the [Learn Python 3](https://www.codecademy.com/learn/learn-python-3) course, which I really enjoyed.
 It is nominally a 25-hour course, although I spent more than that reading forum discussions and 
 completing some of the optional, off-platform projects.  Those turned out to be awesome and also introduced me to using Jupyter Notebooks!
 
-#### Documenation & Packages
+### Documenation & Packages
 The documentation at [Docs.Python.org](https://docs.python.org/3/) is an incredible resource--if you use it!  Python is 
 a vast language, but I admit that most times I was stuck, I was able to figure things out if I actually took the time to read the docs.
 Additionally, there is a wealth of information at the Python Package Index [PyPI](https://pypi.org) for the universe of packages people have

@@ -2,8 +2,6 @@
 
 `"Someone ought to open up a window!"`
 
-[![](http://img.youtube.com/vi/c8vSSSKU0A4/0.jpg)](http://www.youtube.com/watch?v=c8vSSSKU0A4 "WindowSense - First Demo")
-
 Get a sense of when to open your windows for fresh air with WindowSense.
 Set your thermostat for comfort and save money on heating and cooling by 
 letting in the breeze at the best times.  
@@ -15,6 +13,11 @@ throw open the windows for fresh air that won't make your home too hot or cold.
 The RGB LED matrix display uses a rainbow of colors to signal how the temperature 
 will change over the next eight hours, so you can plan ahead and 
 maximize your home's comfort and efficiency.
+
+
+![Installed Photo](Media/WindowSense_photo_1080.jpeg)
+[![](http://img.youtube.com/vi/c8vSSSKU0A4/0.jpg)](http://www.youtube.com/watch?v=c8vSSSKU0A4 "WindowSense - First Demo")
+
 
 ## The Inspiration
 
@@ -36,7 +39,7 @@ WindowSense uses a stylized graph in a spectrum of colors to show when it will b
 cold, warm, or comfortable outside.  The 8x8 RGB LED matrix represents eight hours
 of forecasts, with now on the left and the next seven hours from left to right. 
 
-![Explainer Graphic](Media/WindowSense_explainer_1080.jpeg)
+![Display Explainer Graphic](Media/WindowSense_explainer_1080.jpeg)
 
 Your thermostat's comfort range, as defined by the heating and cooling setpoint, is represented by 
 the middle two rows in green.  Outside temps closer to the top of your comfort range place 
@@ -53,30 +56,32 @@ and flow of daily temperatures, and prepare your home or garden if temperatures 
 
 ## How It Works
 
-WindowSense runs as a Python script on an internet-connected Raspberry Pi and helps your keep your home fresh through a few functions:
-
-1. Reading your Nest thermostat's heat & cool setpoints via Google's smart device access API
-2. Getting the weather forecast from OpenWeatherMap's API using the pyowm library 
-3. Dynamically calculating and drawing a graph that relates the outside temps to
+* Reading the Nest thermostat's heat & cool setpoints via Google's smart device access API
+* Getting the weather forecast from OpenWeatherMap's API using the pyowm library
+* Dynamically calculating and drawing a graph that relates the outside temps to
 your personal comfort settings
-4. Providing temp & humidity readouts, setpoint readouts, brightness adjustments, and 
-a way to safely shut down the Raspberry Pi
+* Interactive button commands, including:
+  - Ambient temp & humidity readout from the Nest
+  - Thermostat heat & cool setpoint readouts
+  - LED brightness adjustment
+  - Manually refreshing the graph
+  - A way to safely shut down the Raspberry Pi
 
-## Respository Contents
+## Repository Contents
 
 This repository includes the Python script which runs WindowSense, as well as some additional resources, including:
 
-1. "Raspberry Pi Setup" - Guidance for how to set up a fresh Raspberry Pi
-2. "Software Installation" - Instructions on how to set up the software and get the script running
-3. "Hardware Assembly" - Information on the hardware and 3D-printed case
-4. "Learning Resources" - Supplemental learning resources for those interested in learning more about 
+- **Raspberry Pi OS Setup:** Guidance for how to set up a fresh Raspberry Pi
+- **Software Installation:** Instructions on how to set up the software and get the script running
+- **Hardware Assembly:** Information on the hardware and 3D-printed case
+- **Learning Resources:** Supplemental learning resources for those interested in learning more about 
 the technologies used to create WindowSense
 
 ## Thanks and Acknowledgments
 
 I want to extend many thanks to the Raspberry Pi Foundation and the countless makers and teachers
-who comprise the incredible community around these devices that inspired and helped me to create this project.
+who comprise the incredible educational and open-source maker community that inspired and helped me to create this project.
 
 ## Disclaimer
-This project was created as an educational experience and is in no way associated with Google, Nest, OpenWeatherMap, the Raspberry Pi Foundation, or any other company mentioned in this repository.
+This project was created as a self-directed educational experience and is in no way associated with Google, Nest, OpenWeatherMap, the Raspberry Pi Foundation, or any other company mentioned in this repository.
 
