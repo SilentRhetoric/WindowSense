@@ -13,8 +13,11 @@ Nylon spacers 11 mm x 2
 
 ## 3D Printing the Case
 
-Link to the STL at PrusaPrinters & Thingiverse  
+[STL File on Thingiverse](https://www.thingiverse.com/thing:4724704)  
 [Protopasta Matte Fiber HTPLA - White (50g coil)](https://www.proto-pasta.com/collections/all/products/matte-fiber-htpla-white)
+
+![WindowSense Case Inside](Media/WindowSense_case_inside_1080.jpeg)
+![WindowSense Case Outside](Media/WindowSense_case_outside_1080.jpeg)
 
 ## Making a screen
 
