@@ -2,7 +2,7 @@
 
 `"Someone ought to open up a window!"`
 
-Get a sense of when to open your windows for fresh air with WindowSense.
+A thermostat for your windows--get a sense of when to open your windows for fresh air with WindowSense.
 Set your thermostat for comfort and save money on heating and cooling by 
 letting in the breeze at the best times.  
 
@@ -14,24 +14,10 @@ The RGB LED matrix display uses a rainbow of colors to signal how the temperatur
 will change over the next eight hours, so you can plan ahead and 
 maximize your home's comfort and efficiency.
 
-
+##### WindowSense installed by a window
 ![Installed Photo](Media/WindowSense_photo_1080.jpeg)
+##### See WindowSense in action in a short demo video
 [![](http://img.youtube.com/vi/c8vSSSKU0A4/0.jpg)](http://www.youtube.com/watch?v=c8vSSSKU0A4 "WindowSense - First Demo")
-
-
-## The Inspiration
-
-There's something special about air that's just the right temperature such that
-you can't feel it at all.  Last fall, when the days were still warm and the 
-nights getting cold, my wife and I were trying to open the windows as much as possible
-for fresh air. However, as the resident steward of the thermostat, 
-I also wanted to make sure we were not letting in hot late-afternoon air that 
-would kick on our air conditioning or leaving the windows open too long and 
-allowing the house to get too cold from the chilly, nighttime air.  Depending 
-on the day, there was sometimes just a narrow window of opportunity to let in 
-fresh air that would feel just right and not waste energy.  So the idea
-was born to create a smart device to tell us when it would be comfortable--and efficient--
-to throw open the windows for a cross-breeze.
 
 ## The WindowSense Display
 
@@ -69,6 +55,20 @@ your personal comfort settings
 
 Additionally, temperature forecast data is written to a .csv file for future data analysis, 
 and the Nest thermostat traits are written to a JSON file to allow investigation of deeper integration opportunities.
+
+## The Inspiration
+
+There's something special about air that's just the right temperature such that
+you can't feel it at all.  Last fall, when the days were still warm and the 
+nights getting cold, my wife and I were trying to open the windows as much as possible
+for fresh air. However, as the resident steward of the thermostat, 
+I also wanted to make sure we were not letting in hot late-afternoon air that 
+would kick on our air conditioning or leaving the windows open too long and 
+allowing the house to get too cold from the chilly, nighttime air.  Depending 
+on the day, there was sometimes just a narrow window of opportunity to let in 
+fresh air that would feel just right and not waste energy.  So the idea
+was born to create a smart device to tell us when it would be comfortable--and efficient--
+to throw open the windows for a cross-breeze.
 
 ## Repository Contents
 
